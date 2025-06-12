@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "lucide-react";
-import { motion } from "motion/react"; // AnimatePresence kaldırıldı, kullanılmıyor
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { AutoHeight } from "./AutoHeight";
 
@@ -15,7 +15,6 @@ function AccordionItem({
   className,
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Item>) {
-  // triggerRef'i burada oluşturuyoruz
   const triggerRef = React.useRef<HTMLButtonElement>(null);
 
   return (
@@ -27,7 +26,6 @@ function AccordionItem({
       className={cn("border-b last:border-b-0", className)}
     >
       <AccordionPrimitive.Item data-slot="accordion-item" {...props}>
-        {/* triggerRef'i AccordionTrigger ve AccordionContent'e children olarak iletiyoruz */}
         {React.Children.map(props.children, (child) => {
           if (React.isValidElement(child)) {
             return React.cloneElement(child, { triggerRef } as any);
@@ -42,7 +40,7 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
-  triggerRef, // triggerRef prop olarak alınıyor
+  triggerRef,
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
   triggerRef?: React.RefObject<HTMLButtonElement>;
@@ -71,7 +69,7 @@ function AccordionTrigger({
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
-        ref={triggerRef} // Ref'i burada kullanıyoruz
+        ref={triggerRef}
         data-slot="accordion-trigger"
         className={cn(
           "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50",
@@ -100,16 +98,27 @@ function AccordionContent({
 }: React.ComponentProps<typeof AccordionPrimitive.Content> & {
   triggerRef?: React.RefObject<HTMLButtonElement>;
 }) {
-  const contentRef = React.useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
+  const contentRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    if (triggerRef?.current) {
-      const state = triggerRef.current.getAttribute("data-state");
+    const updateState = () => {
+      const state = triggerRef?.current?.getAttribute("data-state");
       setIsOpen(state === "open");
+    };
+
+    const observer = new MutationObserver(updateState);
+
+    if (triggerRef?.current) {
+      observer.observe(triggerRef.current, {
+        attributes: true,
+        attributeFilter: ["data-state"],
+      });
+      updateState();
     }
+
+    return () => observer.disconnect();
   }, [triggerRef]);
-  console.log(isOpen);
 
   return (
     <AccordionPrimitive.Content
