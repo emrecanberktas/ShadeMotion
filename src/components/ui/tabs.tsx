@@ -1,34 +1,21 @@
 import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
-import { easeOut, motion, spring } from "motion/react";
+import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
-
-const TabsContext = React.createContext<{ activeTab: string | null }>({
-  activeTab: null,
-});
 
 function Tabs({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) {
-  const [activeTab, setActiveTab] = React.useState<string | null>(null);
-
-  const handleActiveTabValue = (value: string) => {
-    setActiveTab(value);
-  };
-
   return (
-    <TabsContext.Provider value={{ activeTab }}>
-      <TabsPrimitive.Root
-        data-slot="tabs"
-        className={cn("flex flex-col gap-2", className)}
-        onValueChange={handleActiveTabValue}
-        {...props}
-      >
-        {props.children}
-      </TabsPrimitive.Root>
-    </TabsContext.Provider>
+    <TabsPrimitive.Root
+      data-slot="tabs"
+      className={cn("flex flex-col gap-2", className)}
+      {...props}
+    >
+      {props.children}
+    </TabsPrimitive.Root>
   );
 }
 
@@ -37,60 +24,61 @@ function TabsList({
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List>) {
   const tabsListRef = React.useRef<HTMLDivElement>(null);
-  const { activeTab } = React.useContext(TabsContext);
 
   return (
-    <TabsPrimitive.List ref={tabsListRef} data-slot="tabs-list" {...props}>
-      {props.children}
-
-      {activeTab && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7 }}
-          className={cn(
-            "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
-            className
-          )}
-        >
-          {React.Children.map(props.children, (child) => {
-            if (!React.isValidElement(child)) return null;
-            const element = child as React.ReactElement<{
-              value: string;
-              ref?: React.RefObject<HTMLElement>;
-            }>;
-            return element.props.value === activeTab ? (
-              <div
-                style={{
-                  width: element.props.ref?.current?.offsetWidth || 0,
-                  transform: `translateX(${
-                    element.props.ref?.current?.offsetLeft || 0
-                  }px)`,
-                }}
-              />
-            ) : null;
-          })}
-        </motion.div>
+    <TabsPrimitive.List
+      ref={tabsListRef}
+      data-slot="tabs-list"
+      {...props}
+      className={cn(
+        "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
+        className
       )}
-    </TabsPrimitive.List>
+    />
   );
 }
 
 function TabsTrigger({
   className,
+  value,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+}: React.ComponentProps<typeof TabsPrimitive.Trigger> & {
+  "data-state"?: "active" | "inactive";
+  value: string;
+}) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
-    <TabsPrimitive.Trigger data-slot="tabs-trigger" {...props}>
-      <motion.div
+    <div
+      className="relative inline-flex"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <TabsPrimitive.Trigger
+        data-slot="tabs-trigger"
+        {...props}
+        value={value}
         className={cn(
-          "data-[state=active]:bg-background dark:data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+          "text-foreground dark:text-muted-foreground inline-flex h-[calc(100%-1px)] items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
+          "data-[state=active]:bg-background dark:data-[state=active]:bg-input/50 dark:data-[state=active]:text-foreground data-[state=active]:shadow-md",
           className
         )}
       >
         {props.children}
-      </motion.div>
-    </TabsPrimitive.Trigger>
+        {(isHovered || props["data-state"] === "active") && (
+          <motion.div
+            layoutId="tab-indicator"
+            className={cn(
+              "absolute inset-0 rounded-md",
+              props["data-state"] === "active" ? "bg-black/10" : "bg-black/5"
+            )}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+          />
+        )}
+      </TabsPrimitive.Trigger>
+    </div>
   );
 }
 
