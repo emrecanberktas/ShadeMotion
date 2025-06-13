@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
+import { CheckCircle2Icon } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./components/ui/alert-dialog";
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -43,30 +47,24 @@ function App() {
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
             <div className="space-y-4">
-              <button
-                onClick={handleOpen}
-                className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-              >
-                Toggle Alert
-              </button>
-              {isOpen && (
-                <div className="w-full flex justify-center align-middle flex-col gap-4">
-                  <Alert variant="destructive">
-                    <AlertCircleIcon />
-                    <AlertTitle>Unable to process your payment.</AlertTitle>
-                    <AlertDescription>
-                      <p>
-                        Please verify your billing information and try again.
-                      </p>
-                      <ul className="list-inside list-disc text-sm">
-                        <li>Check your card details</li>
-                        <li>Ensure sufficient funds</li>
-                        <li>Verify billing address</li>
-                      </ul>
-                    </AlertDescription>
-                  </Alert>
-                </div>
-              )}
+              <AlertDialog>
+                <AlertDialogTrigger>Open</AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      your account and remove your data from our servers.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction>Continue</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
         </div>
