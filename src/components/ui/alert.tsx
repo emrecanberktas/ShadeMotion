@@ -23,11 +23,11 @@ const alertVariants = cva(
 const motionVariants = {
   hidden: {
     opacity: 0,
-    x: 100,
+    y: 100,
   },
   visible: {
     opacity: 1,
-    x: 0,
+    y: 0,
     transition: {
       duration: 0.3,
       ease: "easeOut",
@@ -35,7 +35,7 @@ const motionVariants = {
   },
   exit: {
     opacity: 0,
-    x: 100,
+    y: 100,
     transition: {
       duration: 0.2,
       ease: "easeIn",
