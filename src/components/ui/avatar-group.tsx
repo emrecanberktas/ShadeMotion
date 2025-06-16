@@ -46,44 +46,56 @@ export function AvatarGroup({
                 transition={{ duration: 0.2, type: "spring", stiffness: 150 }}
               >
                 <Avatar
-                  key={index}
                   className={cn(
                     "border-2 border-background",
                     sizeClasses[size]
                   )}
                 >
                   {avatar.src ? (
-                    <motion.img
-                      src={avatar.src}
-                      alt={avatar.alt || ""}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{
-                        duration: 0.2,
-                        ease: "easeInOut",
-                        delay: index * 0.1,
-                      }}
-                    />
+                    <AvatarImage src={avatar.src} alt={avatar.alt || ""} />
                   ) : null}
+                  <AvatarFallback>
+                    {avatar.fallback || avatar.alt?.[0] || "?"}
+                  </AvatarFallback>
                 </Avatar>
               </motion.div>
             </TooltipTrigger>
             <TooltipContent side="top">
-              <p>{avatar.alt}</p>
+              <div className="flex flex-col gap-1">
+                <p className="font-medium">{avatar.alt}</p>
+                {avatar.fallback && (
+                  <p className="text-xs text-muted-foreground">
+                    {avatar.fallback}
+                  </p>
+                )}
+              </div>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       ))}
       {remainingCount > 0 && (
-        <Avatar
-          className={cn(
-            "border-2 border-background bg-muted",
-            sizeClasses[size]
-          )}
-        >
-          <AvatarFallback>+{remainingCount}</AvatarFallback>
-        </Avatar>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <motion.div
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.2, type: "spring", stiffness: 150 }}
+              >
+                <Avatar
+                  className={cn(
+                    "border-2 border-background bg-muted",
+                    sizeClasses[size]
+                  )}
+                >
+                  <AvatarFallback>+{remainingCount}</AvatarFallback>
+                </Avatar>
+              </motion.div>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p className="text-sm">Ve {remainingCount} kişi daha</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
     </div>
   );
