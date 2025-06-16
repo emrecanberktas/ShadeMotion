@@ -11,6 +11,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import { AvatarGroup } from "./components/ui/avatar-group";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "./components/ui/tooltip";
+import { Button } from "./components/ui/button";
 
 function App() {
   return (
@@ -46,7 +54,47 @@ function App() {
 
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-            <div className="space-y-4">
+            <div className="space-y-4 h-full">
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button>Open1</Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Open the alert dialog 1</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button>Open2</Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Open the alert dialog 2</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button>Open3</Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Open the alert dialog 3</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button>Open4</Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Open the alert dialog 4</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button>Open5</Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Open the alert dialog 5</p>
+                </TooltipContent>
+              </Tooltip>
               <AlertDialog>
                 <AlertDialogTrigger>Open</AlertDialogTrigger>
                 <AlertDialogContent>
@@ -76,6 +124,22 @@ function App() {
             and their interactions. Feel free to explore the different features
             and components available.
           </p>
+          <AvatarGroup
+            avatars={[
+              { src: "https://github.com/shadcn.png", alt: "User 1" },
+              { src: "https://github.com/shadcn.png", alt: "User 2" },
+              { src: "https://github.com/shadcn.png", alt: "User 3" },
+              { src: "https://github.com/shadcn.png", alt: "User 4" },
+              { src: "https://github.com/shadcn.png", alt: "User 5" },
+              { src: "https://github.com/shadcn.png", alt: "User 6" },
+              { src: "https://github.com/shadcn.png", alt: "User 7" },
+              { src: "https://github.com/shadcn.png", alt: "User 8" },
+              { src: "https://github.com/shadcn.png", alt: "User 9" },
+              { src: "https://github.com/shadcn.png", alt: "User 10" },
+            ]}
+            max={5}
+            size="lg"
+          />
         </div>
       </div>
     </div>
