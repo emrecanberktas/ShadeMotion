@@ -35,7 +35,7 @@ function App() {
   >("idle");
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-50 dark:bg-black">
         <div className="container mx-auto px-4 py-8">
           <header className="mb-8 flex justify-between items-center">
             <div>
@@ -50,20 +50,20 @@ function App() {
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+            <div className="bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
               <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
                 Features
               </h2>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
                   <CheckCircle2Icon className="text-green-500" />
                   <span>Responsive Design</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
                   <CheckCircle2Icon className="text-green-500" />
                   <span>Modern UI Components</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
                   <CheckCircle2Icon className="text-green-500" />
                   <span>Interactive Elements</span>
                 </li>
@@ -72,7 +72,7 @@ function App() {
           </div>
 
           {/* Tabs Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm flex flex-col gap-4">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm flex flex-col gap-4">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Tabs Example
             </h2>
@@ -86,27 +86,27 @@ function App() {
                   <TabsTrigger value="tab5">Tab 5</TabsTrigger>
                 </TabsList>
                 <TabsContent value="tab1">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Tab 1.
                   </p>
                 </TabsContent>
                 <TabsContent value="tab2">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Tab 2.
                   </p>
                 </TabsContent>
                 <TabsContent value="tab3">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Tab 3.
                   </p>
                 </TabsContent>
                 <TabsContent value="tab4">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Tab 4.
                   </p>
                 </TabsContent>
                 <TabsContent value="tab5">
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Tab 5.
                   </p>
                 </TabsContent>
@@ -115,7 +115,7 @@ function App() {
           </div>
 
           {/* Accordion Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Accordion Example
             </h2>
@@ -125,7 +125,7 @@ function App() {
                   Accordion Item 1
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Accordion Item 1.
                   </p>
                 </AccordionContent>
@@ -135,7 +135,7 @@ function App() {
                   Accordion Item 2
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Accordion Item 2.
                   </p>
                 </AccordionContent>
@@ -145,7 +145,7 @@ function App() {
                   Accordion Item 3
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 dark:text-gray-200">
                     This is the content of Accordion Item 3.
                   </p>
                 </AccordionContent>
@@ -154,7 +154,7 @@ function App() {
           </div>
 
           {/* Button Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Button Examples
             </h2>
@@ -173,7 +173,7 @@ function App() {
           </div>
 
           {/* AlertDialog Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               AlertDialog Example
             </h2>
@@ -181,12 +181,12 @@ function App() {
               <AlertDialogTrigger asChild>
                 <Button variant="outline">Open Alert Dialog</Button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="bg-white dark:bg-gray-800">
+              <AlertDialogContent className="bg-white dark:bg-gray-900">
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-gray-900 dark:text-white">
                     Are you sure?
                   </AlertDialogTitle>
-                  <AlertDialogDescription className="text-gray-700 dark:text-gray-300">
+                  <AlertDialogDescription className="text-gray-700 dark:text-gray-200">
                     This action cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
@@ -199,7 +199,7 @@ function App() {
           </div>
 
           {/* Avatar Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Avatar Example
             </h2>
@@ -220,7 +220,7 @@ function App() {
           </div>
 
           {/* AvatarGroup Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               AvatarGroup Example
             </h2>
@@ -238,7 +238,7 @@ function App() {
           </div>
 
           {/* Tooltip Section */}
-          <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Tooltip Example
             </h2>
@@ -247,7 +247,7 @@ function App() {
                 <TooltipTrigger asChild>
                   <Button variant="outline">Hover me</Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+                <TooltipContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
                   <p>This is a tooltip</p>
                 </TooltipContent>
               </Tooltip>

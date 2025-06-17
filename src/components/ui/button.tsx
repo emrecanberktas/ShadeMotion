@@ -96,7 +96,7 @@ function LoadingButton({
   };
 
   return (
-    <button
+    <Button
       onClick={onClick}
       disabled={disabled ?? state !== "idle"}
       className={cn(
@@ -117,7 +117,7 @@ function LoadingButton({
           {contentMap[state]}
         </motion.span>
       </AnimatePresence>
-    </button>
+    </Button>
   );
 }
 
