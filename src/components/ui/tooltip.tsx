@@ -44,7 +44,7 @@ function TooltipContent({
         data-slot="tooltip-content"
         sideOffset={sideOffset}
         className={cn(
-          "bg-primary text-primary-foreground z-[100] w-fit rounded-md px-3 py-1.5 text-xs text-balance shadow-md",
+          "bg-popover text-popover-foreground z-[100] w-fit rounded-md px-3 py-1.5 text-xs text-balance shadow-md dark:bg-gray-800 dark:text-gray-100",
           className
         )}
         forceMount
@@ -70,7 +70,7 @@ function TooltipContent({
           </motion.div>
         </AnimatePresence>
 
-        <TooltipPrimitive.Arrow className="bg-primary fill-primary z-[100] size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] shadow-md" />
+        <TooltipPrimitive.Arrow className="fill-popover dark:fill-gray-800 z-[100] size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] shadow-md" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );

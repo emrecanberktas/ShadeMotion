@@ -70,7 +70,9 @@ function TabsTrigger({
             layoutId="tab-indicator"
             className={cn(
               "absolute inset-0 rounded-md",
-              props["data-state"] === "active" ? "bg-black/10" : "bg-black/5"
+              props["data-state"] === "active"
+                ? "bg-black/10 dark:bg-white/20"
+                : "bg-black/5 dark:bg-white/10"
             )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
