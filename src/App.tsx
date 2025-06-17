@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { CheckCircle2Icon } from "lucide-react";
 import {
   AlertDialog,
@@ -11,7 +10,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./components/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { AvatarGroup } from "./components/ui/avatar-group";
 import {
   Tooltip,
