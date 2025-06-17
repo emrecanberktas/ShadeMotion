@@ -1,8 +1,10 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, type VariantProps } from "class-variance-authority";
+import { AnimatePresence, motion } from "framer-motion";
+import { Loader2Icon } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -33,7 +35,7 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 function Button({
   className,
@@ -43,17 +45,80 @@ function Button({
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   }) {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
 
   return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95, rotate: "2.5deg" }}
+      transition={{ duration: 0.125, type: "easeInOut" }}
+    >
+      <Comp
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      />
+    </motion.button>
+  );
 }
 
-export { Button, buttonVariants }
+interface LoadingButtonProps {
+  state?: "idle" | "loading" | "success";
+  onClick?: () => void;
+  idleText?: React.ReactNode;
+  loadingIndicator?: React.ReactNode;
+  successText?: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+}
+
+function LoadingButton({
+  state = "idle",
+  onClick,
+  idleText = "Send me a login link",
+  loadingIndicator = <Loader2Icon className="animate-spin" />,
+  successText = "Login link sent!",
+  className,
+  disabled,
+}: LoadingButtonProps) {
+  const contentMap: Record<string, React.ReactNode> = {
+    idle: idleText,
+    loading: loadingIndicator,
+    success: successText,
+  };
+
+  const variants = {
+    initial: { opacity: 0, y: -25 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 25 },
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled ?? state !== "idle"}
+      className={cn(
+        "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium relative overflow-hidden",
+        "disabled:opacity-50 disabled:cursor-not-allowed transition-all min-w-[180px] flex items-center justify-center",
+        className
+      )}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span
+          key={state}
+          initial="initial"
+          animate="visible"
+          exit="exit"
+          variants={variants}
+          transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+        >
+          {contentMap[state]}
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+}
+
+export { Button, buttonVariants, LoadingButton };
