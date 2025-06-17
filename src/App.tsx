@@ -61,23 +61,6 @@ function App() {
               </li>
             </ul>
           </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-            <div className="space-y-4 h-full">
-              <Button variant="outline">Click me</Button>
-              <div className="flex justify-center">
-                <LoadingButton
-                  state={buttonState}
-                  onClick={() => {
-                    setButtonState("loading");
-                    setTimeout(() => setButtonState("success"), 1750);
-                    setTimeout(() => setButtonState("idle"), 3500);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Tabs Section */}
@@ -142,10 +125,14 @@ function App() {
           <div className="flex flex-wrap gap-4">
             <Button variant="default">Default Button</Button>
             <Button variant="destructive">Destructive Button</Button>
-            <Button variant="outline">Outline Button</Button>
-            <Button variant="secondary">Secondary Button</Button>
-            <Button variant="ghost">Ghost Button</Button>
-            <Button variant="link">Link Button</Button>
+            <LoadingButton
+              state={buttonState}
+              onClick={() => {
+                setButtonState("loading");
+                setTimeout(() => setButtonState("success"), 1750);
+                setTimeout(() => setButtonState("idle"), 3500);
+              }}
+            />
           </div>
         </div>
 
