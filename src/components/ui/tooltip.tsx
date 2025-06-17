@@ -39,40 +39,40 @@ function TooltipContent({
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content>) {
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 5 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 5 }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 25,
-        }}
-        style={{
-          transformOrigin: "var(--radix-tooltip-content-transform-origin)",
-          position: "relative",
-          isolation: "isolate",
-        }}
+    <TooltipPrimitive.Portal>
+      <TooltipPrimitive.Content
+        data-slot="tooltip-content"
+        sideOffset={sideOffset}
+        className={cn(
+          "bg-primary text-primary-foreground z-[100] w-fit rounded-md px-3 py-1.5 text-xs text-balance shadow-md",
+          className
+        )}
+        forceMount
+        {...props}
       >
-        <TooltipPrimitive.Portal>
-          <TooltipPrimitive.Content
-            data-slot="tooltip-content"
-            sideOffset={sideOffset}
-            className={cn(
-              "bg-primary text-primary-foreground z-[100] w-fit rounded-md px-3 py-1.5 text-xs text-balance shadow-md",
-              className
-            )}
-            forceMount
-            {...props}
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 5 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 5 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+            }}
+            style={{
+              transformOrigin: "var(--radix-tooltip-content-transform-origin)",
+              position: "relative",
+              isolation: "isolate",
+            }}
           >
             {children}
+          </motion.div>
+        </AnimatePresence>
 
-            <TooltipPrimitive.Arrow className="bg-primary fill-primary z-[100] size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] shadow-md" />
-          </TooltipPrimitive.Content>
-        </TooltipPrimitive.Portal>
-      </motion.div>
-    </AnimatePresence>
+        <TooltipPrimitive.Arrow className="bg-primary fill-primary z-[100] size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] shadow-md" />
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Portal>
   );
 }
 
