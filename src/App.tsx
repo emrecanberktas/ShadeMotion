@@ -1,4 +1,15 @@
 import { CheckCircle2Icon } from "lucide-react";
+import { AvatarGroup } from "./components/ui/avatar-group";
+import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import { Button, LoadingButton } from "./components/ui/button";
+import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "./components/ui/accordion";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,15 +21,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./components/ui/alert-dialog";
-import { AvatarGroup } from "./components/ui/avatar-group";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "./components/ui/tooltip";
-import { Button } from "./components/ui/button";
 
 function App() {
+  const [buttonState, setButtonState] = useState<
+    "idle" | "loading" | "success"
+  >("idle");
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
@@ -53,75 +65,134 @@ function App() {
           <div className="bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
             <div className="space-y-4 h-full">
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button>Open1</Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Open the alert dialog 1</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button>Open2</Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Open the alert dialog 2</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button>Open3</Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Open the alert dialog 3</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button>Open4</Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Open the alert dialog 4</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button>Open5</Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Open the alert dialog 5</p>
-                </TooltipContent>
-              </Tooltip>
-              <AlertDialog>
-                <AlertDialogTrigger>Open</AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <Button variant="outline">Click me</Button>
+              <div className="flex justify-center">
+                <LoadingButton
+                  state={buttonState}
+                  onClick={() => {
+                    setButtonState("loading");
+                    setTimeout(() => setButtonState("success"), 1750);
+                    setTimeout(() => setButtonState("idle"), 3500);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Tabs Section */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm flex flex-col gap-4">
+          <h2 className="text-xl font-semibold mb-4">Tabs Example</h2>
+          <div className="flex flex-col gap-4 ">
+            <Tabs defaultValue="tab1" className="w-full flex justify-center">
+              <TabsList className="flex justify-center">
+                <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+                <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+                <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+                <TabsTrigger value="tab4">Tab 4</TabsTrigger>
+                <TabsTrigger value="tab5">Tab 5</TabsTrigger>
+              </TabsList>
+              <TabsContent value="tab1">
+                <p>This is the content of Tab 1.</p>
+              </TabsContent>
+              <TabsContent value="tab2">
+                <p>This is the content of Tab 2.</p>
+              </TabsContent>
+              <TabsContent value="tab3">
+                <p>This is the content of Tab 3.</p>
+              </TabsContent>
+              <TabsContent value="tab4">
+                <p>This is the content of Tab 4.</p>
+              </TabsContent>
+              <TabsContent value="tab5">
+                <p>This is the content of Tab 5.</p>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
+
+        {/* Accordion Section */}
         <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">About</h2>
-          <p className="text-gray-600">
-            This is a simple demonstration page showing various UI components
-            and their interactions. Feel free to explore the different features
-            and components available.
-          </p>
+          <h2 className="text-xl font-semibold mb-4">Accordion Example</h2>
+          <Accordion type="single" collapsible defaultValue="item-1">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Accordion Item 1</AccordionTrigger>
+              <AccordionContent>
+                This is the content of Accordion Item 1.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Accordion Item 2</AccordionTrigger>
+              <AccordionContent>
+                This is the content of Accordion Item 2.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Accordion Item 3</AccordionTrigger>
+              <AccordionContent>
+                This is the content of Accordion Item 3.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        {/* Button Section */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">Button Examples</h2>
+          <div className="flex flex-wrap gap-4">
+            <Button variant="default">Default Button</Button>
+            <Button variant="destructive">Destructive Button</Button>
+            <Button variant="outline">Outline Button</Button>
+            <Button variant="secondary">Secondary Button</Button>
+            <Button variant="ghost">Ghost Button</Button>
+            <Button variant="link">Link Button</Button>
+          </div>
+        </div>
+
+        {/* AlertDialog Section */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">AlertDialog Example</h2>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">Open Alert Dialog</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+
+        {/* Avatar Section */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">Avatar Example</h2>
+          <div className="flex gap-4">
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </div>
+        </div>
+
+        {/* AvatarGroup Section */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">AvatarGroup Example</h2>
           <AvatarGroup
             avatars={[
               { src: "https://github.com/shadcn.png", alt: "User 1" },
@@ -129,15 +200,25 @@ function App() {
               { src: "https://github.com/shadcn.png", alt: "User 3" },
               { src: "https://github.com/shadcn.png", alt: "User 4" },
               { src: "https://github.com/shadcn.png", alt: "User 5" },
-              { src: "https://github.com/shadcn.png", alt: "User 6" },
-              { src: "https://github.com/shadcn.png", alt: "User 7" },
-              { src: "https://github.com/shadcn.png", alt: "User 8" },
-              { src: "https://github.com/shadcn.png", alt: "User 9" },
-              { src: "https://github.com/shadcn.png", alt: "User 10" },
             ]}
             max={5}
             size="lg"
           />
+        </div>
+
+        {/* Tooltip Section */}
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">Tooltip Example</h2>
+          <div className="flex gap-4">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline">Hover me</Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>This is a tooltip</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
       </div>
     </div>
