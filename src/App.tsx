@@ -30,6 +30,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/ui/mode-toggle";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
 import { motion } from "motion/react";
+import { Checkbox } from "./components/ui/checkbox";
 
 function App() {
   const [buttonState, setButtonState] = useState<
@@ -276,6 +277,15 @@ function App() {
                   <p>This is a tooltip</p>
                 </TooltipContent>
               </Tooltip>
+            </div>
+          </div>
+          {/* Checkbox Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              Checkbox Example
+            </h2>
+            <div className="flex gap-4">
+              <Checkbox />
             </div>
           </div>
         </div>
