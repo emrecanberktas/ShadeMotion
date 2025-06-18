@@ -1,4 +1,4 @@
-import { CheckCircle2Icon } from "lucide-react";
+import { CheckCircle2Icon, ChevronsUpDown } from "lucide-react";
 import { AvatarGroup } from "./components/ui/avatar-group";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { Button, LoadingButton } from "./components/ui/button";
@@ -31,12 +31,18 @@ import { ModeToggle } from "./components/ui/mode-toggle";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
 import { motion } from "motion/react";
 import { Checkbox } from "./components/ui/checkbox";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "./components/ui/collapsible";
 
 function App() {
   const [buttonState, setButtonState] = useState<
     "idle" | "loading" | "success"
   >("idle");
   const [alertState, setAlertState] = useState(false);
+  const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -176,10 +182,7 @@ function App() {
             </div>
           </div>
           {/* Alert Section */}
-          <motion.div
-            layout
-            className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm"
-          >
+          <motion.div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Alert
             </h2>
@@ -261,6 +264,46 @@ function App() {
               max={5}
               size="lg"
             />
+          </div>
+
+          {/* Collapsible Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              Collapsible Example
+            </h2>
+            <div className="flex gap-4">
+              <Collapsible
+                open={isCollapsibleOpen}
+                onOpenChange={setIsCollapsibleOpen}
+                className="flex w-[350px] flex-col gap-2"
+              >
+                <div className="flex items-center justify-between gap-4 px-4">
+                  <h4 className="text-sm font-semibold">
+                    @peduarte starred 3 repositories
+                  </h4>
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="icon" className="size-8">
+                      <ChevronsUpDown />
+                      <span className="sr-only">Toggle</span>
+                    </Button>
+                  </CollapsibleTrigger>
+                </div>
+                <div className="rounded-md border px-4 py-2 font-mono text-sm">
+                  @radix-ui/primitives
+                </div>
+                <CollapsibleContent
+                  open={isCollapsibleOpen}
+                  className="flex flex-col gap-2"
+                >
+                  <div className="rounded-md border px-4 py-2 font-mono text-sm">
+                    @radix-ui/colors
+                  </div>
+                  <div className="rounded-md border px-4 py-2 font-mono text-sm">
+                    @stitches/react
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
           </div>
 
           {/* Tooltip Section */}
