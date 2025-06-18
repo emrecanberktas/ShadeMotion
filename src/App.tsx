@@ -28,11 +28,14 @@ import {
 } from "./components/ui/tooltip";
 import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/ui/mode-toggle";
+import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
+import { motion } from "motion/react";
 
 function App() {
   const [buttonState, setButtonState] = useState<
     "idle" | "loading" | "success"
   >("idle");
+  const [alertState, setAlertState] = useState(false);
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -171,6 +174,28 @@ function App() {
               />
             </div>
           </div>
+          {/* Alert Section */}
+          <motion.div
+            layout
+            className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm"
+          >
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              Alert
+            </h2>
+            <Button
+              onClick={() => setAlertState(!alertState)}
+              className="mb-4"
+              variant="destructive"
+            >
+              Open Alert
+            </Button>
+            {alertState && (
+              <Alert variant="destructive">
+                <AlertTitle>Alert Title</AlertTitle>
+                <AlertDescription>Alert Description</AlertDescription>
+              </Alert>
+            )}
+          </motion.div>
 
           {/* AlertDialog Section */}
           <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
