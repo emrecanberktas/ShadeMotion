@@ -36,10 +36,10 @@ export function AvatarGroup({
   const remainingCount = avatars.length - max;
 
   return (
-    <div className={cn("flex -space-x-2", className)} {...props}>
-      {visibleAvatars.map((avatar, index) => (
-        <TooltipProvider key={index}>
-          <Tooltip>
+    <TooltipProvider>
+      <div className={cn("flex -space-x-2", className)} {...props}>
+        {visibleAvatars.map((avatar, index) => (
+          <Tooltip key={index}>
             <TooltipTrigger asChild>
               <motion.div
                 whileHover={{ y: -10 }}
@@ -70,10 +70,8 @@ export function AvatarGroup({
               </div>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      ))}
-      {remainingCount > 0 && (
-        <TooltipProvider>
+        ))}
+        {remainingCount > 0 && (
           <Tooltip>
             <TooltipTrigger asChild>
               <motion.div
@@ -94,8 +92,8 @@ export function AvatarGroup({
               <p className="text-sm">Ve {remainingCount} kişi daha</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      )}
-    </div>
+        )}
+      </div>
+    </TooltipProvider>
   );
 }
