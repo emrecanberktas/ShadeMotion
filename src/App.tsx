@@ -36,6 +36,12 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
 } from "./components/ui/collapsible";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
 
 function App() {
   const [buttonState, setButtonState] = useState<
@@ -262,31 +268,36 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               AvatarGroup Example
             </h2>
-            <AvatarGroup
-              avatars={[
-                { src: "https://github.com/emrecanberktas.png", alt: "Emre " },
-                { src: "https://github.com/emrecanberktas.png", alt: "Can" },
-                {
-                  src: "https://github.com/emrecanberktas.png",
-                  alt: "Berktaş",
-                },
-                {
-                  src: "https://github.com/emrecanberktas.png",
-                  alt: "Keçiören",
-                },
-                { alt: "Keçiören" },
-              ]}
-              max={5}
-              size="lg"
-              className="size-32"
-            />
+            <div className="flex justify-center items-center">
+              <AvatarGroup
+                avatars={[
+                  {
+                    src: "https://github.com/emrecanberktas.png",
+                    alt: "Emre ",
+                  },
+                  { src: "https://github.com/emrecanberktas.png", alt: "Can" },
+                  {
+                    src: "https://github.com/emrecanberktas.png",
+                    alt: "Berktaş",
+                  },
+                  {
+                    src: "https://github.com/emrecanberktas.png",
+                    alt: "Ankara",
+                  },
+                  { alt: "Keçiören" },
+                ]}
+                max={5}
+                className="lg"
+              />
+            </div>
           </div>
 
+          {/* Collapsible Section */}
           <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Collapsible Example
             </h2>
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center">
               <Collapsible
                 open={isCollapsibleOpen}
                 onOpenChange={setIsCollapsibleOpen}
@@ -323,7 +334,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Tooltip Example
             </h2>
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="outline">Hover me</Button>
@@ -334,13 +345,33 @@ function App() {
               </Tooltip>
             </div>
           </div>
+
           {/* Checkbox Section */}
           <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Checkbox Example
             </h2>
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center">
               <Checkbox />
+            </div>
+          </div>
+
+          {/* DropdownMenu Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              DropdownMenu Example
+            </h2>
+            <div className="flex gap-4 justify-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">Open Dropdown</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Item 1</DropdownMenuItem>
+                  <DropdownMenuItem>Item 2</DropdownMenuItem>
+                  <DropdownMenuItem>Item 3</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
