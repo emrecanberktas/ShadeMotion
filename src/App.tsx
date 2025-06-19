@@ -43,7 +43,6 @@ function App() {
   >("idle");
   const [alertState, setAlertState] = useState(false);
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
-  const [isAccordionOpen, setIsAccordionOpen] = useState("");
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
