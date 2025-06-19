@@ -43,6 +43,7 @@ function App() {
   >("idle");
   const [alertState, setAlertState] = useState(false);
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState("");
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -129,7 +130,12 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Accordion Example
             </h2>
-            <Accordion type="single" collapsible defaultValue="item-1">
+            <Accordion
+              type="single"
+              collapsible
+              value={isAccordionOpen}
+              onValueChange={setIsAccordionOpen}
+            >
               <AccordionItem value="item-1">
                 <AccordionTrigger className="text-gray-900 dark:text-white">
                   Accordion Item 1
@@ -291,10 +297,7 @@ function App() {
                 <div className="rounded-md border px-4 py-2 font-mono text-sm">
                   @radix-ui/primitives
                 </div>
-                <CollapsibleContent
-                  open={isCollapsibleOpen}
-                  className="flex flex-col gap-2"
-                >
+                <CollapsibleContent className="flex flex-col gap-2">
                   <div className="rounded-md border px-4 py-2 font-mono text-sm">
                     @radix-ui/colors
                   </div>
@@ -316,7 +319,7 @@ function App() {
                 <TooltipTrigger asChild>
                   <Button variant="outline">Hover me</Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+                <TooltipContent>
                   <p>This is a tooltip</p>
                 </TooltipContent>
               </Tooltip>
