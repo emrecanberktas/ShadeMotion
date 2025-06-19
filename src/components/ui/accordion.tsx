@@ -1,75 +1,121 @@
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "lucide-react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { AutoHeight } from "./AutoHeight";
+
+const AccordionContext = React.createContext<{
+  value: string | string[];
+  type: "single" | "multiple";
+} | null>(null);
+
+const AccordionItemContext = React.createContext<{
+  value: string;
+} | null>(null);
+
+function useAccordion() {
+  const context = React.useContext(AccordionContext);
+  if (!context) {
+    throw new Error("Accordion components must be used within an Accordion");
+  }
+  return context;
+}
+
+function useAccordionItem() {
+  const context = React.useContext(AccordionItemContext);
+  if (!context) {
+    throw new Error(
+      "AccordionItem components must be used within an AccordionItem"
+    );
+  }
+  return context;
+}
 
 function Accordion({
+  type = "single",
+  value,
+  onValueChange,
+  defaultValue,
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
-  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
+  const [internalValue, setInternalValue] = React.useState<string | string[]>(
+    type === "single" ? "" : []
+  );
+  const isControlled = value !== undefined && onValueChange !== undefined;
+  const currentValue = isControlled ? value : internalValue;
+  const setCurrentValue = isControlled ? onValueChange : setInternalValue;
+
+  const contextValue = React.useMemo(
+    () => ({ value: currentValue, type }),
+    [currentValue, type]
+  );
+
+  return (
+    <AccordionContext.Provider value={contextValue}>
+      {type === "single" ? (
+        <AccordionPrimitive.Root
+          type="single"
+          value={currentValue as string}
+          onValueChange={setCurrentValue as (value: string) => void}
+          defaultValue={defaultValue as string | undefined}
+          data-slot="accordion"
+          {...props}
+        />
+      ) : (
+        <AccordionPrimitive.Root
+          type="multiple"
+          value={currentValue as string[]}
+          onValueChange={setCurrentValue as (value: string[]) => void}
+          defaultValue={defaultValue as string[] | undefined}
+          data-slot="accordion"
+          {...props}
+        />
+      )}
+    </AccordionContext.Provider>
+  );
 }
 
 function AccordionItem({
   className,
+  value,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
-  const triggerRef = React.useRef<HTMLButtonElement>(null);
+}: React.ComponentProps<typeof AccordionPrimitive.Item> & { value: string }) {
+  const contextValue = React.useMemo(() => ({ value }), [value]);
 
   return (
-    <motion.div
-      whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={cn("border-b last:border-b-0", className)}
-    >
-      <AccordionPrimitive.Item data-slot="accordion-item" {...props}>
-        {React.Children.map(props.children, (child) => {
-          if (React.isValidElement(child)) {
-            return React.cloneElement(child, { triggerRef } as any);
-          }
-          return child;
-        })}
-      </AccordionPrimitive.Item>
-    </motion.div>
+    <AccordionItemContext.Provider value={contextValue}>
+      <motion.div
+        whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className={cn("border-b last:border-b-0", className)}
+      >
+        <AccordionPrimitive.Item
+          data-slot="accordion-item"
+          value={value}
+          {...props}
+        />
+      </motion.div>
+    </AccordionItemContext.Provider>
   );
 }
 
 function AccordionTrigger({
   className,
   children,
-  triggerRef,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
-  triggerRef?: React.RefObject<HTMLButtonElement>;
-}) {
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const updateState = () => {
-      const state = triggerRef?.current?.getAttribute("data-state");
-      setIsOpen(state === "open");
-    };
-
-    const observer = new MutationObserver(updateState);
-
-    if (triggerRef?.current) {
-      observer.observe(triggerRef.current, {
-        attributes: true,
-        attributeFilter: ["data-state"],
-      });
-      updateState();
-    }
-
-    return () => observer.disconnect();
-  }, [triggerRef]);
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  const { value: accordionValue, type } = useAccordion();
+  const { value: itemValue } = useAccordionItem();
+  const isOpen =
+    type === "single"
+      ? accordionValue === itemValue
+      : accordionValue.includes(itemValue);
 
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
-        ref={triggerRef}
         data-slot="accordion-trigger"
         className={cn(
           "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50",
@@ -93,45 +139,35 @@ function AccordionTrigger({
 function AccordionContent({
   className,
   children,
-  triggerRef,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Content> & {
-  triggerRef?: React.RefObject<HTMLButtonElement>;
-}) {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const contentRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const updateState = () => {
-      const state = triggerRef?.current?.getAttribute("data-state");
-      setIsOpen(state === "open");
-    };
-
-    const observer = new MutationObserver(updateState);
-
-    if (triggerRef?.current) {
-      observer.observe(triggerRef.current, {
-        attributes: true,
-        attributeFilter: ["data-state"],
-      });
-      updateState();
-    }
-
-    return () => observer.disconnect();
-  }, [triggerRef]);
+}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+  const { value: accordionValue, type } = useAccordion();
+  const { value: itemValue } = useAccordionItem();
+  const isOpen =
+    type === "single"
+      ? accordionValue === itemValue
+      : accordionValue.includes(itemValue);
 
   return (
-    <AccordionPrimitive.Content
-      data-slot="accordion-content"
-      className={cn("overflow-hidden text-sm", className)}
-      {...props}
-    >
-      <AutoHeight isOpen={isOpen}>
-        <div ref={contentRef} className="pt-0 pb-4">
-          {children}
-        </div>
-      </AutoHeight>
-    </AccordionPrimitive.Content>
+    <AnimatePresence initial={false}>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, type: "easeInOut" }}
+        >
+          <AccordionPrimitive.Content
+            data-slot="accordion-content"
+            className={cn("overflow-hidden text-sm pt-0 pb-4", className)}
+            forceMount
+            {...props}
+          >
+            {children}
+          </AccordionPrimitive.Content>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
