@@ -92,8 +92,8 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Tabs Example
             </h2>
-            <div className="flex flex-col gap-4">
-              <Tabs defaultValue="tab1" className="w-full flex justify-center">
+            <div className="flex flex-col gap-4 justify-center items-center">
+              <Tabs defaultValue="tab1">
                 <TabsList className="flex justify-center">
                   <TabsTrigger value="tab1">Tab 1</TabsTrigger>
                   <TabsTrigger value="tab2">Tab 2</TabsTrigger>
@@ -174,7 +174,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Button Examples
             </h2>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center items-center">
               <Button variant="default">Default Button</Button>
               <Button variant="destructive">Destructive Button</Button>
               <LoadingButton
@@ -188,49 +188,53 @@ function App() {
             </div>
           </div>
           {/* Alert Section */}
-          <motion.div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Alert
             </h2>
-            <Button
-              onClick={() => setAlertState(!alertState)}
-              className="mb-4"
-              variant="destructive"
-            >
-              Open Alert
-            </Button>
-            {alertState && (
-              <Alert variant="destructive">
-                <AlertTitle>Alert Title</AlertTitle>
-                <AlertDescription>Alert Description</AlertDescription>
-              </Alert>
-            )}
-          </motion.div>
+            <div className="flex justify-center items-center flex-col">
+              <Button
+                onClick={() => setAlertState(!alertState)}
+                className="mb-4"
+                variant="destructive"
+              >
+                Open Alert
+              </Button>
+              {alertState && (
+                <Alert variant="destructive">
+                  <AlertTitle>Alert Title</AlertTitle>
+                  <AlertDescription>Alert Description</AlertDescription>
+                </Alert>
+              )}
+            </div>
+          </div>
 
           {/* AlertDialog Section */}
           <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               AlertDialog Example
             </h2>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline">Open Alert Dialog</Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="bg-white dark:bg-gray-900">
-                <AlertDialogHeader>
-                  <AlertDialogTitle className="text-gray-900 dark:text-white">
-                    Are you sure?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-gray-700 dark:text-gray-200">
-                    This action cannot be undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Continue</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <div className="flex justify-center items-center">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline">Open Alert Dialog</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-white dark:bg-gray-900">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-gray-900 dark:text-white">
+                      Are you sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-gray-700 dark:text-gray-200">
+                      This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction>Continue</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
 
           {/* Avatar Section */}
@@ -238,7 +242,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Avatar Example
             </h2>
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center items-center">
               <Avatar className="size-32">
                 <AvatarImage
                   src="https://github.com/emrecanberktas.png"
@@ -287,7 +291,8 @@ function App() {
                   { alt: "Keçiören" },
                 ]}
                 max={5}
-                className="lg"
+                size="lg"
+                className="size-32 flex justify-center items-center"
               />
             </div>
           </div>
