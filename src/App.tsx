@@ -130,12 +130,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Accordion Example
             </h2>
-            <Accordion
-              type="single"
-              collapsible
-              value={isAccordionOpen}
-              onValueChange={setIsAccordionOpen}
-            >
+            <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
                 <AccordionTrigger className="text-gray-900 dark:text-white">
                   Accordion Item 1
@@ -239,16 +234,25 @@ function App() {
               Avatar Example
             </h2>
             <div className="flex gap-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="User 1" />
+              <Avatar className="size-32">
+                <AvatarImage
+                  src="https://github.com/emrecanberktas.png"
+                  alt="User 1"
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="User 2" />
+              <Avatar className="size-32">
+                <AvatarImage
+                  src="https://github.com/emrecanberktas.png"
+                  alt="User 2"
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="User 3" />
+              <Avatar className="size-32">
+                <AvatarImage
+                  src="https://github.com/emrecanberktas.png"
+                  alt="User 3"
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </div>
@@ -261,18 +265,24 @@ function App() {
             </h2>
             <AvatarGroup
               avatars={[
-                { src: "https://github.com/shadcn.png", alt: "User 1" },
-                { src: "https://github.com/shadcn.png", alt: "User 2" },
-                { src: "https://github.com/shadcn.png", alt: "User 3" },
-                { src: "https://github.com/shadcn.png", alt: "User 4" },
-                { src: "https://github.com/shadcn.png", alt: "User 5" },
+                { src: "https://github.com/emrecanberktas.png", alt: "Emre " },
+                { src: "https://github.com/emrecanberktas.png", alt: "Can" },
+                {
+                  src: "https://github.com/emrecanberktas.png",
+                  alt: "Berktaş",
+                },
+                {
+                  src: "https://github.com/emrecanberktas.png",
+                  alt: "Keçiören",
+                },
+                { alt: "Keçiören" },
               ]}
               max={5}
               size="lg"
+              className="size-32"
             />
           </div>
 
-          {/* Collapsible Section */}
           <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Collapsible Example

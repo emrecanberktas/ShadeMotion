@@ -48,12 +48,11 @@ export function AvatarGroup({
                 <Avatar
                   className={cn(
                     "border-2 border-background",
-                    sizeClasses[size]
+                    sizeClasses[size],
+                    className
                   )}
                 >
-                  {avatar.src ? (
-                    <AvatarImage src={avatar.src} alt={avatar.alt || ""} />
-                  ) : null}
+                  <AvatarImage src={avatar.src} alt={avatar.alt || ""} />
                   <AvatarFallback>
                     {avatar.fallback || avatar.alt?.[0] || "?"}
                   </AvatarFallback>
