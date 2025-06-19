@@ -1,10 +1,34 @@
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
+import { createContext, useContext, useMemo } from "react";
+
+const CollapsibleContext = createContext<{ isOpen: boolean } | null>(null);
+
+function useCollapsible() {
+  const context = useContext(CollapsibleContext);
+  if (!context) {
+    throw new Error("Collapsible components must be used within a Collapsible");
+  }
+  return context;
+}
 
 function Collapsible({
+  open,
+  onOpenChange,
   ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
-  return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />;
+  const contextValue = useMemo(() => ({ isOpen: open ?? false }), [open]);
+
+  return (
+    <CollapsibleContext.Provider value={contextValue}>
+      <CollapsiblePrimitive.Root
+        open={open}
+        onOpenChange={onOpenChange}
+        data-slot="collapsible"
+        {...props}
+      />
+    </CollapsibleContext.Provider>
+  );
 }
 
 function CollapsibleTrigger({
@@ -19,16 +43,14 @@ function CollapsibleTrigger({
 }
 
 function CollapsibleContent({
-  open,
   ...props
-}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent> & {
-  open: boolean;
-}) {
+}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) {
+  const { isOpen } = useCollapsible();
+
   return (
     <AnimatePresence initial={false}>
-      {open && (
+      {isOpen && (
         <motion.div
-          layout
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
