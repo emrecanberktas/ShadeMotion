@@ -52,7 +52,7 @@ function Button({
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95, rotate: "2.5deg" }}
+      // whileTap={{ scale: 0.95, rotate: "2.5deg" }}
       transition={{ duration: 0.125, type: "easeInOut" }}
     >
       <Comp
