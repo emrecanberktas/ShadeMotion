@@ -1,8 +1,13 @@
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import { AnimatePresence, motion } from "motion/react";
-import { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
-const CollapsibleContext = createContext<{ isOpen: boolean } | null>(null);
+type CollapsibleContextType = {
+  isOpen: boolean;
+  setIsOpen?: (open: boolean) => void;
+};
+
+const CollapsibleContext = createContext<CollapsibleContextType | null>(null);
 
 function useCollapsible() {
   const context = useContext(CollapsibleContext);
@@ -12,18 +17,40 @@ function useCollapsible() {
   return context;
 }
 
+interface CollapsibleProps
+  extends React.ComponentProps<typeof CollapsiblePrimitive.Root> {}
+
 function Collapsible({
-  open,
+  open: openProp,
+  defaultOpen,
   onOpenChange,
   ...props
-}: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
-  const contextValue = useMemo(() => ({ isOpen: open ?? false }), [open]);
+}: CollapsibleProps) {
+  const isControlled = openProp !== undefined;
+
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(
+    defaultOpen ?? false
+  );
+
+  const open = isControlled ? openProp : uncontrolledOpen;
+
+  const handleOpenChange = (value: boolean) => {
+    if (!isControlled) {
+      setUncontrolledOpen(value);
+    }
+    onOpenChange?.(value);
+  };
+
+  const contextValue = useMemo(
+    () => ({ isOpen: open, setIsOpen: handleOpenChange }),
+    [open, handleOpenChange]
+  );
 
   return (
     <CollapsibleContext.Provider value={contextValue}>
       <CollapsiblePrimitive.Root
         open={open}
-        onOpenChange={onOpenChange}
+        onOpenChange={handleOpenChange}
         data-slot="collapsible"
         {...props}
       />
@@ -48,7 +75,7 @@ function CollapsibleContent({
   const { isOpen } = useCollapsible();
 
   return (
-    <AnimatePresence initial={false}>
+    <AnimatePresence>
       {isOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
