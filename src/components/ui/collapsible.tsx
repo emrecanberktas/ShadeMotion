@@ -70,25 +70,38 @@ function CollapsibleTrigger({
 }
 
 function CollapsibleContent({
+  children,
   ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) {
   const { isOpen } = useCollapsible();
 
   return (
     <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3, type: "easeInOut" }}
-        >
-          <CollapsiblePrimitive.CollapsibleContent
-            forceMount
-            data-slot="collapsible-content"
-            {...props}
-          />
-        </motion.div>
+      {React.Children.map(
+        children,
+        (child, index) =>
+          isOpen && (
+            <motion.div
+              layoutId="collapsible-content"
+              key={index}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{
+                duration: 0.3,
+                delay: index * 0.05,
+                type: "easeOut",
+              }}
+            >
+              <CollapsiblePrimitive.CollapsibleContent
+                forceMount
+                data-slot="collapsible-content"
+                {...props}
+              >
+                {child}
+              </CollapsiblePrimitive.CollapsibleContent>
+            </motion.div>
+          )
       )}
     </AnimatePresence>
   );
