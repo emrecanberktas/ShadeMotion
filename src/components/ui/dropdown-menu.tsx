@@ -92,46 +92,52 @@ function DropdownMenuContent({
   const { isOpen } = useDropdownMenu();
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10 }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
-      >
-        <DropdownMenuPrimitive.Portal>
+    <DropdownMenuPrimitive.Portal forceMount>
+      <AnimatePresence>
+        {isOpen && (
           <DropdownMenuPrimitive.Content
             sideOffset={sideOffset}
             data-slot="dropdown-menu-content"
-            className={cn(
-              "bg-popover text-popover-foreground z-50 max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[8rem] origin-[var(--radix-dropdown-menu-content-transform-origin)] overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md",
-              className
-            )}
+            asChild
             {...props}
           >
-            {React.Children.map(children, (child, index) => (
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: index * 0.05,
-                      ease: "easeOut",
-                    }}
-                  >
-                    {child}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            ))}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              transition={{
+                duration: 0.2,
+                ease: "easeOut",
+                when: "beforeChildren",
+              }}
+              className={cn(
+                "bg-popover text-popover-foreground z-50 max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[8rem] origin-[var(--radix-dropdown-menu-content-transform-origin)] overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md",
+                className
+              )}
+            >
+              {React.Children.map(children, (child, index) => (
+                <AnimatePresence key={index}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: index * 0.05,
+                        ease: "easeOut",
+                      }}
+                    >
+                      {child}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              ))}
+            </motion.div>
           </DropdownMenuPrimitive.Content>
-        </DropdownMenuPrimitive.Portal>
-      </motion.div>
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </DropdownMenuPrimitive.Portal>
   );
 }
 
@@ -338,28 +344,35 @@ function DropdownMenuSubContent({
   const { isOpen } = useDropdownSubMenu();
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 10 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
-        >
-          <DropdownMenuPrimitive.Portal>
-            <DropdownMenuPrimitive.SubContent
-              data-slot="dropdown-menu-sub-content"
+    <DropdownMenuPrimitive.Portal forceMount>
+      <AnimatePresence mode="wait">
+        {isOpen && (
+          <DropdownMenuPrimitive.SubContent
+            data-slot="dropdown-menu-sub-content"
+            asChild
+            forceMount
+            {...props}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+                when: "beforeChildren",
+              }}
               className={cn(
                 "bg-popover text-popover-foreground z-50 min-w-[8rem] origin-[var(--radix-dropdown-menu-content-transform-origin)] overflow-hidden rounded-md border p-1 shadow-lg",
                 className
               )}
-              {...props}
             >
               {React.Children.map(children, (child, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
                   transition={{
                     duration: 0.4,
                     delay: index * 0.05,
@@ -369,11 +382,11 @@ function DropdownMenuSubContent({
                   {child}
                 </motion.div>
               ))}
-            </DropdownMenuPrimitive.SubContent>
-          </DropdownMenuPrimitive.Portal>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            </motion.div>
+          </DropdownMenuPrimitive.SubContent>
+        )}
+      </AnimatePresence>
+    </DropdownMenuPrimitive.Portal>
   );
 }
 
