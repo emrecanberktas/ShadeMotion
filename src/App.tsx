@@ -29,7 +29,6 @@ import {
 import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/ui/mode-toggle";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
-import { motion } from "motion/react";
 import { Checkbox } from "./components/ui/checkbox";
 import {
   Collapsible,
@@ -45,9 +44,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
@@ -59,7 +55,6 @@ function App() {
     "idle" | "loading" | "success"
   >("idle");
   const [alertState, setAlertState] = useState(false);
-  const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false);
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -380,9 +375,7 @@ function App() {
             <div className="flex gap-4 justify-center">
               <Collapsible className="flex w-[350px] flex-col gap-2">
                 <div className="flex items-center justify-between gap-4 px-4">
-                  <h4 className="text-sm font-semibold">
-                    @peduarte starred 3 repositories
-                  </h4>
+                  <h4 className="text-sm font-semibold">Emre Can Berktaş</h4>
                   <CollapsibleTrigger asChild>
                     <Button variant="ghost" size="icon" className="size-8">
                       <ChevronsUpDown />
@@ -391,14 +384,20 @@ function App() {
                   </CollapsibleTrigger>
                 </div>
                 <div className="rounded-md border px-4 py-2 font-mono text-sm">
-                  @radix-ui/primitives
+                  Turkey
                 </div>
                 <CollapsibleContent className="flex flex-col gap-2">
                   <div className="rounded-md border px-4 py-2 font-mono text-sm">
-                    @radix-ui/colors
+                    Ankara
                   </div>
                   <div className="rounded-md border px-4 py-2 font-mono text-sm">
-                    @stitches/react
+                    Keçiören
+                  </div>
+                  <div className="rounded-md border px-4 py-2 font-mono text-sm">
+                    Subayevleri
+                  </div>
+                  <div className="rounded-md border px-4 py-2 font-mono text-sm">
+                    Katestroy
                   </div>
                 </CollapsibleContent>
               </Collapsible>
