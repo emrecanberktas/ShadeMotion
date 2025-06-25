@@ -1,14 +1,58 @@
+"use client";
+
 import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+
+type AlertDialogContextType = {
+  isOpen: boolean;
+};
+
+const AlertDialogContext = React.createContext<
+  AlertDialogContextType | undefined
+>(undefined);
+
+const useAlertDialog = (): AlertDialogContextType => {
+  const context = React.useContext(AlertDialogContext);
+  if (!context) {
+    throw new Error("useAlertDialog must be used within an AlertDialog");
+  }
+  return context;
+};
 
 function AlertDialog({
+  children,
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
-  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
+  const [isOpen, setIsOpen] = React.useState(
+    props?.open ?? props?.defaultOpen ?? false
+  );
+
+  React.useEffect(() => {
+    if (props?.open !== undefined) setIsOpen(props.open);
+  }, [props?.open]);
+
+  const handleOpenChange = React.useCallback(
+    (open: boolean) => {
+      setIsOpen(open);
+      props.onOpenChange?.(open);
+    },
+    [props]
+  );
+
+  return (
+    <AlertDialogContext.Provider value={{ isOpen }}>
+      <AlertDialogPrimitive.Root
+        data-slot="alert-dialog"
+        {...props}
+        onOpenChange={handleOpenChange}
+      >
+        {children}
+      </AlertDialogPrimitive.Root>
+    </AlertDialogContext.Provider>
+  );
 }
 
 function AlertDialogTrigger({
@@ -32,44 +76,67 @@ function AlertDialogOverlay({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2, ease: "easeInOut" }}
-    >
-      <AlertDialogPrimitive.Overlay
-        data-slot="alert-dialog-overlay"
-        className={cn("fixed inset-0 z-50 bg-black/50", className)}
-        {...props}
-      />
-    </motion.div>
+    <AlertDialogPrimitive.Overlay
+      data-slot="alert-dialog-overlay"
+      className={cn("fixed inset-0 z-50 bg-black/50", className)}
+      {...props}
+    />
   );
 }
 
 function AlertDialogContent({
+  children,
   className,
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Content>) {
+  const { isOpen } = useAlertDialog();
+
   return (
-    <AlertDialogPortal>
-      <AlertDialogOverlay />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
-      >
-        <AlertDialogPrimitive.Content
-          data-slot="alert-dialog-content"
-          className={cn(
-            "bg-background fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
-            className
-          )}
-          {...props}
-        />
-      </motion.div>
-    </AlertDialogPortal>
+    <AnimatePresence>
+      {isOpen && (
+        <AlertDialogPortal forceMount>
+          <AlertDialogOverlay asChild forceMount>
+            <motion.div
+              initial={{ opacity: 0, filter: "blur(4px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, filter: "blur(4px)" }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            />
+          </AlertDialogOverlay>
+          <AlertDialogPrimitive.Content
+            forceMount
+            asChild
+            data-slot="alert-dialog-content"
+            {...props}
+          >
+            <motion.div
+              initial={{
+                opacity: 0,
+                filter: "blur(4px)",
+                transform: "perspective(500px) rotateX(20deg) scale(0.8)",
+              }}
+              animate={{
+                opacity: 1,
+                filter: "blur(0px)",
+                transform: "perspective(500px) rotateX(0deg) scale(1)",
+              }}
+              exit={{
+                opacity: 0,
+                filter: "blur(4px)",
+                transform: "perspective(500px) rotateX(20deg) scale(0.8)",
+              }}
+              transition={{ type: "spring", stiffness: 150, damping: 25 }}
+              className={cn(
+                "fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background p-6 shadow-lg sm:max-w-lg",
+                className
+              )}
+            >
+              {children}
+            </motion.div>
+          </AlertDialogPrimitive.Content>
+        </AlertDialogPortal>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -164,4 +231,5 @@ export {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
+  useAlertDialog,
 };
