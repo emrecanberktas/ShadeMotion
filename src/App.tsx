@@ -60,6 +60,7 @@ import {
   DialogTitle,
 } from "./components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
+import { Skeleton } from "./components/ui/skeleton";
 
 function App() {
   const [buttonState, setButtonState] = useState<
@@ -499,6 +500,19 @@ function App() {
                 <RadioGroupItem value="2">Option 2</RadioGroupItem>
                 <RadioGroupItem value="3">Option 3</RadioGroupItem>
               </RadioGroup>
+            </div>
+          </div>
+          {/* Skeleton Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              Skeleton Example
+            </h2>
+            <div className="flex gap-4 justify-center">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
             </div>
           </div>
         </div>
