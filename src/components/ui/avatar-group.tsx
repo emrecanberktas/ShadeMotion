@@ -89,7 +89,7 @@ export function AvatarGroup({
               </motion.div>
             </TooltipTrigger>
             <TooltipContent side="top">
-              <p className="text-sm">Ve {remainingCount} kişi daha</p>
+              <p className="text-sm">View {remainingCount} more people</p>
             </TooltipContent>
           </Tooltip>
         )}
