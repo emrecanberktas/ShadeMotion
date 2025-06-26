@@ -37,7 +37,7 @@ export function AvatarGroup({
 
   return (
     <TooltipProvider>
-      <div className={cn("flex -space-x-2", className)} {...props}>
+      <div className={cn("flex -space-x-4", className)} {...props}>
         {visibleAvatars.map((avatar, index) => (
           <Tooltip key={index}>
             <TooltipTrigger asChild>

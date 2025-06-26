@@ -59,6 +59,7 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "./components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
 
 function App() {
   const [buttonState, setButtonState] = useState<
@@ -485,6 +486,19 @@ function App() {
             </h2>
             <div className="flex gap-4 justify-center">
               <Checkbox />
+            </div>
+          </div>
+          {/* RadioGroup Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              RadioGroup Example
+            </h2>
+            <div className="flex gap-4 justify-center">
+              <RadioGroup>
+                <RadioGroupItem value="1">Option 1</RadioGroupItem>
+                <RadioGroupItem value="2">Option 2</RadioGroupItem>
+                <RadioGroupItem value="3">Option 3</RadioGroupItem>
+              </RadioGroup>
             </div>
           </div>
         </div>
