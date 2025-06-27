@@ -61,12 +61,68 @@ import {
 } from "./components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
 import { Skeleton } from "./components/ui/skeleton";
+import { MultiStep, type Step } from "./components/ui/multi-step-component";
+import { Input } from "./components/ui/input";
 
 function App() {
   const [buttonState, setButtonState] = useState<
     "idle" | "loading" | "success"
   >("idle");
   const [alertState, setAlertState] = useState(false);
+
+  const steps: Step[] = [
+    {
+      title: "Step One",
+      description: (
+        <>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
+            quos.
+          </p>
+        </>
+      ),
+      content: (
+        <>
+          <div className="space-y-2">
+            <Input placeholder="Enter your name" />
+            <Input placeholder="Enter your email" />
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Step Two",
+      description:
+        "This step explains the purpose of the component. It includes some skeleton placeholders.",
+      content: (
+        <>
+          <p>Continue with more details in this step.</p>
+          <div className="space-y-2">
+            <Input placeholder="Enter your phone number" />
+            <Input placeholder="Enter your address" />
+          </div>
+        </>
+      ),
+    },
+    {
+      title: "Step Three",
+      description: (
+        <>
+          <p>Final step with additional placeholders.</p>
+        </>
+      ),
+      content: (
+        <>
+          <div className="space-y-2">
+            <Input placeholder="Enter your city" />
+            <Input placeholder="Enter your state" />
+            <Input placeholder="Enter your zip code" />
+          </div>
+        </>
+      ),
+    },
+  ];
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -514,6 +570,15 @@ function App() {
                 <Skeleton className="h-4 w-[200px]" />
               </div>
             </div>
+          </div>
+
+          {/* MultiStep Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              MultiStep Example
+            </h2>
+
+            <MultiStep steps={steps} />
           </div>
         </div>
       </div>
