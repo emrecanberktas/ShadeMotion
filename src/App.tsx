@@ -1,8 +1,8 @@
-import { CheckCircle2Icon, ChevronsUpDown } from "lucide-react";
+import { CheckCircle2Icon, ChevronsUpDown, Grid, List } from "lucide-react";
 import { AvatarGroup } from "./components/ui/avatar-group";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { Button, LoadingButton } from "./components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
 import {
   Accordion,
@@ -63,12 +63,19 @@ import { RadioGroup, RadioGroupItem } from "./components/ui/radio-group";
 import { Skeleton } from "./components/ui/skeleton";
 import { MultiStep, type Step } from "./components/ui/multi-step-component";
 import { Input } from "./components/ui/input";
+import { AnimatedList } from "./components/ui/animeted-list";
+import { motion } from "motion/react";
+import { cn } from "./lib/utils";
 
 function App() {
   const [buttonState, setButtonState] = useState<
     "idle" | "loading" | "success"
   >("idle");
   const [alertState, setAlertState] = useState(false);
+  const [listDirection, setListDirection] = useState<"vertical" | "horizontal">(
+    "vertical"
+  );
+  const [visibleItems, setVisibleItems] = useState<number>(0);
 
   const steps: Step[] = [
     {
@@ -123,6 +130,59 @@ function App() {
     },
   ];
 
+  // Data objesi
+  const listItems = [
+    {
+      id: 1,
+      title: "Proje Yönetimi",
+
+      gradient: "from-blue-500 to-purple-600",
+    },
+    {
+      id: 2,
+      title: "Takım İşbirliği",
+      gradient: "from-green-500 to-teal-600",
+    },
+    {
+      id: 3,
+      title: "Analitik Raporlar",
+      gradient: "from-orange-500 to-red-600",
+    },
+    {
+      id: 4,
+      title: "Güvenlik",
+
+      gradient: "from-purple-500 to-pink-600",
+    },
+    {
+      id: 5,
+      title: "Müşteri Desteği",
+      gradient: "from-teal-500 to-cyan-600",
+    },
+    {
+      id: 6,
+      title: "Entegrasyon",
+      gradient: "from-indigo-500 to-blue-600",
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisibleItems((prev) => {
+        if (prev < listItems.length) {
+          return prev + 1;
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [listItems.length]);
+
+  const resetList = () => {
+    setVisibleItems(0);
+  };
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -159,6 +219,68 @@ function App() {
                 </li>
               </ul>
             </div>
+          </div>
+          {/* PoweredList Section */}
+          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  AnimatedList Demo
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  Kartlar her saniye teker teker eklenir.
+                </p>
+                <p className="text-gray-500 dark:text-gray-500 text-xs mt-1">
+                  {visibleItems} / {listItems.length} eleman
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={resetList}>
+                  Reset
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setListDirection((prev) =>
+                      prev === "vertical" ? "horizontal" : "vertical"
+                    )
+                  }
+                >
+                  {listDirection === "vertical" ? "Grid" : "List"}
+                </Button>
+              </div>
+            </div>
+            <AnimatedList
+              className="gap-4"
+              itemClassName="w-full max-w-sm"
+              delayFactor={0.1}
+              direction={listDirection}
+              emptyMessage="Henüz eleman yok"
+            >
+              {listItems.slice(0, visibleItems).map((item) => (
+                <div
+                  key={item.id}
+                  className="p-4 bg-white dark:bg-zinc-800 rounded-lg border border-gray-200 dark:border-gray-700"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={cn(
+                        "w-10 h-10 bg-gradient-to-br rounded-full flex items-center justify-center",
+                        item.gradient
+                      )}
+                    >
+                      <span className="text-white font-bold">{item.id}</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 dark:text-white">
+                        {item.title}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </AnimatedList>
           </div>
           {/* DropdownMenu Section */}
           <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm flex flex-col gap-4 h-40">
