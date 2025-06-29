@@ -185,56 +185,56 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-gray-50 dark:bg-black">
-        <div className="container mx-auto px-4 py-8">
-          <header className="mb-8 flex justify-between items-center">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+          <header className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 Welcome to Our App
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">
+              <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm sm:text-base">
                 A simple demonstration of components
               </p>
             </div>
             <ModeToggle />
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            <div className="bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
                 Features
               </h2>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
-                  <CheckCircle2Icon className="text-green-500" />
+                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200 text-sm sm:text-base">
+                  <CheckCircle2Icon className="text-green-500 w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Responsive Design</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
-                  <CheckCircle2Icon className="text-green-500" />
+                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200 text-sm sm:text-base">
+                  <CheckCircle2Icon className="text-green-500 w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Modern UI Components</span>
                 </li>
-                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200">
-                  <CheckCircle2Icon className="text-green-500" />
+                <li className="flex items-center gap-2 text-gray-700 dark:text-gray-200 text-sm sm:text-base">
+                  <CheckCircle2Icon className="text-green-500 w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Interactive Elements</span>
                 </li>
               </ul>
             </div>
           </div>
-          {/* PoweredList Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <div className="flex justify-between items-center mb-4">
+
+          {/* AnimatedList Section */}
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  AnimatedList Demo
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">
+                  AnimatedList Example
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Kartlar her saniye teker teker eklenir.
-                </p>
-                <p className="text-gray-500 dark:text-gray-500 text-xs mt-1">
-                  {visibleItems} / {listItems.length} eleman
-                </p>
               </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={resetList}>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetList}
+                  className="flex-1 sm:flex-none"
+                >
                   Reset
                 </Button>
                 <Button
@@ -245,13 +245,14 @@ function App() {
                       prev === "vertical" ? "horizontal" : "vertical"
                     )
                   }
+                  className="flex-1 sm:flex-none"
                 >
                   {listDirection === "vertical" ? "Grid" : "List"}
                 </Button>
               </div>
             </div>
             <AnimatedList
-              className="gap-4"
+              className="gap-3 sm:gap-4"
               itemClassName="w-full max-w-sm"
               delayFactor={0.1}
               direction={listDirection}
@@ -260,19 +261,21 @@ function App() {
               {listItems.slice(0, visibleItems).map((item) => (
                 <div
                   key={item.id}
-                  className="p-4 bg-white dark:bg-zinc-800 rounded-lg border border-gray-200 dark:border-gray-700"
+                  className="p-3 sm:p-4 bg-white dark:bg-zinc-800 rounded-lg border border-gray-200 dark:border-gray-700"
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={cn(
-                        "w-10 h-10 bg-gradient-to-br rounded-full flex items-center justify-center",
+                        "w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br rounded-full flex items-center justify-center flex-shrink-0",
                         item.gradient
                       )}
                     >
-                      <span className="text-white font-bold">{item.id}</span>
+                      <span className="text-white font-bold text-sm sm:text-base">
+                        {item.id}
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900 dark:text-white">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-gray-900 dark:text-white text-sm sm:text-base truncate">
                         {item.title}
                       </h3>
                     </div>
@@ -281,15 +284,18 @@ function App() {
               ))}
             </AnimatedList>
           </div>
+
           {/* DropdownMenu Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm flex flex-col gap-4 h-40">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               DropdownMenu Example
             </h2>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">Open</Button>
+                  <Button variant="outline" className="w-full sm:w-auto">
+                    Open
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="start">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -390,37 +396,37 @@ function App() {
           </div>
 
           {/* Accordion Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Accordion Example
             </h2>
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="text-gray-900 dark:text-white">
+                <AccordionTrigger className="text-gray-900 dark:text-white text-sm sm:text-base">
                   Accordion Item 1
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-gray-700 dark:text-gray-200">
+                  <p className="text-gray-700 dark:text-gray-200 text-sm sm:text-base">
                     This is the content of Accordion Item 1.
                   </p>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
-                <AccordionTrigger className="text-gray-900 dark:text-white">
+                <AccordionTrigger className="text-gray-900 dark:text-white text-sm sm:text-base">
                   Accordion Item 2
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-gray-700 dark:text-gray-200">
+                  <p className="text-gray-700 dark:text-gray-200 text-sm sm:text-base">
                     This is the content of Accordion Item 2.
                   </p>
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger className="text-gray-900 dark:text-white">
+                <AccordionTrigger className="text-gray-900 dark:text-white text-sm sm:text-base">
                   Accordion Item 3
                 </AccordionTrigger>
                 <AccordionContent>
-                  <p className="text-gray-700 dark:text-gray-200">
+                  <p className="text-gray-700 dark:text-gray-200 text-sm sm:text-base">
                     This is the content of Accordion Item 3.
                   </p>
                 </AccordionContent>
@@ -429,13 +435,17 @@ function App() {
           </div>
 
           {/* Button Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Button Examples
             </h2>
-            <div className="flex flex-wrap gap-4 justify-center items-center">
-              <Button variant="default">Default Button</Button>
-              <Button variant="destructive">Destructive Button</Button>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center">
+              <Button variant="default" className="w-full sm:w-auto">
+                Default Button
+              </Button>
+              <Button variant="destructive" className="w-full sm:w-auto">
+                Destructive Button
+              </Button>
               <LoadingButton
                 state={buttonState}
                 onClick={() => {
@@ -443,40 +453,44 @@ function App() {
                   setTimeout(() => setButtonState("success"), 1750);
                   setTimeout(() => setButtonState("idle"), 3500);
                 }}
+                className="w-full sm:w-auto"
               />
             </div>
           </div>
+
           {/* Alert Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Alert
             </h2>
             <div className="flex justify-center items-center flex-col">
               <Button
                 onClick={() => setAlertState(!alertState)}
-                className="mb-4"
+                className="mb-4 w-full sm:w-auto"
                 variant="destructive"
               >
                 Open Alert
               </Button>
               {alertState && (
-                <Alert variant="destructive">
+                <Alert variant="destructive" className="w-full max-w-md">
                   <AlertTitle>Alert Title</AlertTitle>
                   <AlertDescription>Alert Description</AlertDescription>
                 </Alert>
               )}
             </div>
           </div>
-          {/*Dialog Section*/}
 
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          {/*Dialog Section*/}
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Dialog Example
             </h2>
             <div className="flex justify-center items-center">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline">Open Dialog</Button>
+                  <Button variant="outline" className="w-full sm:w-auto">
+                    Open Dialog
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
@@ -516,14 +530,16 @@ function App() {
           </div>
 
           {/* AlertDialog Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               AlertDialog Example
             </h2>
             <div className="flex justify-center items-center">
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="outline">Open Alert Dialog</Button>
+                  <Button variant="outline" className="w-full sm:w-auto">
+                    Open Alert Dialog
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="bg-white dark:bg-gray-900">
                   <AlertDialogHeader>
@@ -544,26 +560,26 @@ function App() {
           </div>
 
           {/* Avatar Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Avatar Example
             </h2>
-            <div className="flex gap-4 justify-center items-center">
-              <Avatar className="size-32">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Avatar className="size-20 sm:size-32">
                 <AvatarImage
                   src="https://github.com/emrecanberktas.png"
                   alt="User 1"
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Avatar className="size-32">
+              <Avatar className="size-20 sm:size-32">
                 <AvatarImage
                   src="https://github.com/emrecanberktas.png"
                   alt="User 2"
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <Avatar className="size-32">
+              <Avatar className="size-20 sm:size-32">
                 <AvatarImage
                   src="https://github.com/emrecanberktas.png"
                   alt="User 3"
@@ -574,8 +590,8 @@ function App() {
           </div>
 
           {/* AvatarGroup Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               AvatarGroup Example
             </h2>
             <div className="flex justify-center items-center">
@@ -598,18 +614,18 @@ function App() {
                 ]}
                 max={5}
                 size="lg"
-                className="size-32 flex justify-center items-center"
+                className="size-20 sm:size-32 flex justify-center items-center"
               />
             </div>
           </div>
 
           {/* Collapsible Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Collapsible Example
             </h2>
             <div className="flex gap-4 justify-center">
-              <Collapsible className="flex w-[350px] flex-col gap-2">
+              <Collapsible className="flex w-full max-w-[350px] flex-col gap-2">
                 <div className="flex items-center justify-between gap-4 px-4">
                   <h4 className="text-sm font-semibold">Emre Can Berktaş</h4>
                   <CollapsibleTrigger asChild>
@@ -641,14 +657,16 @@ function App() {
           </div>
 
           {/* Tooltip Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Tooltip Example
             </h2>
             <div className="flex gap-4 justify-center">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline">Hover me</Button>
+                  <Button variant="outline" className="w-full sm:w-auto">
+                    Hover me
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>This is a tooltip</p>
@@ -658,20 +676,21 @@ function App() {
           </div>
 
           {/* Checkbox Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Checkbox Example
             </h2>
             <div className="flex gap-4 justify-center">
               <Checkbox />
             </div>
           </div>
+
           {/* RadioGroup Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               RadioGroup Example
             </h2>
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <RadioGroup>
                 <RadioGroupItem value="1">Option 1</RadioGroupItem>
                 <RadioGroupItem value="2">Option 2</RadioGroupItem>
@@ -679,12 +698,13 @@ function App() {
               </RadioGroup>
             </div>
           </div>
+
           {/* Skeleton Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               Skeleton Example
             </h2>
-            <div className="flex gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Skeleton className="h-12 w-12 rounded-full" />
               <div className="space-y-2">
                 <Skeleton className="h-4 w-[250px]" />
@@ -694,11 +714,10 @@ function App() {
           </div>
 
           {/* MultiStep Section */}
-          <div className="mt-8 bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
               MultiStep Example
             </h2>
-
             <MultiStep steps={steps} />
           </div>
         </div>
