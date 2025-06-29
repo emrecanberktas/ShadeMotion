@@ -1,4 +1,4 @@
-import { CheckCircle2Icon, ChevronsUpDown, Grid, List } from "lucide-react";
+import { CheckCircle2Icon, ChevronsUpDown } from "lucide-react";
 import { AvatarGroup } from "./components/ui/avatar-group";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { Button, LoadingButton } from "./components/ui/button";
@@ -64,7 +64,6 @@ import { Skeleton } from "./components/ui/skeleton";
 import { MultiStep, type Step } from "./components/ui/multi-step-component";
 import { Input } from "./components/ui/input";
 import { AnimatedList } from "./components/ui/animeted-list";
-import { motion } from "motion/react";
 import { cn } from "./lib/utils";
 
 function App() {
