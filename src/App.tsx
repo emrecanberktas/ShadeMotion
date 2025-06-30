@@ -65,6 +65,21 @@ import { MultiStep, type Step } from "./components/ui/multi-step-component";
 import { Input } from "./components/ui/input";
 import { AnimatedList } from "./components/ui/animeted-list";
 import { cn } from "./lib/utils";
+import {
+  ContextMenu,
+  ContextMenuSub,
+  ContextMenuCheckboxItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuShortcut,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+} from "./components/ui/context-menu";
 
 function App() {
   const [buttonState, setButtonState] = useState<
@@ -129,7 +144,6 @@ function App() {
     },
   ];
 
-  // Data objesi
   const listItems = [
     {
       id: 1,
@@ -283,6 +297,72 @@ function App() {
                 </div>
               ))}
             </AnimatedList>
+          </div>
+
+          {/* ContextMenu Section */}
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              ContextMenu Example
+            </h2>
+            <div className="flex justify-center items-center">
+              <ContextMenu>
+                <ContextMenuTrigger
+                  className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm"
+                  customCursor={
+                    <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                  }
+                >
+                  Right click here
+                </ContextMenuTrigger>
+                <ContextMenuContent className="w-52">
+                  <ContextMenuItem inset>
+                    Back
+                    <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuItem inset disabled>
+                    Forward
+                    <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuItem inset>
+                    Reload
+                    <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+                  </ContextMenuItem>
+                  <ContextMenuSub>
+                    <ContextMenuSubTrigger inset>
+                      More Tools
+                    </ContextMenuSubTrigger>
+                    <ContextMenuSubContent className="w-44">
+                      <ContextMenuItem>Save Page...</ContextMenuItem>
+                      <ContextMenuItem>Create Shortcut...</ContextMenuItem>
+                      <ContextMenuItem>Name Window...</ContextMenuItem>
+                      <ContextMenuSeparator />
+                      <ContextMenuItem>Developer Tools</ContextMenuItem>
+                      <ContextMenuSeparator />
+                      <ContextMenuItem variant="destructive">
+                        Delete
+                      </ContextMenuItem>
+                    </ContextMenuSubContent>
+                  </ContextMenuSub>
+                  <ContextMenuSeparator />
+                  <ContextMenuCheckboxItem checked>
+                    Show Bookmarks
+                  </ContextMenuCheckboxItem>
+                  <ContextMenuCheckboxItem>
+                    Show Full URLs
+                  </ContextMenuCheckboxItem>
+                  <ContextMenuSeparator />
+                  <ContextMenuRadioGroup value="pedro">
+                    <ContextMenuLabel inset>People</ContextMenuLabel>
+                    <ContextMenuRadioItem value="pedro">
+                      Pedro Duarte
+                    </ContextMenuRadioItem>
+                    <ContextMenuRadioItem value="colm">
+                      Colm Tuite
+                    </ContextMenuRadioItem>
+                  </ContextMenuRadioGroup>
+                </ContextMenuContent>
+              </ContextMenu>
+            </div>
           </div>
 
           {/* DropdownMenu Section */}
