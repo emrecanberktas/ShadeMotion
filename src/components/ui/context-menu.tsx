@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-} from "react";
+import React, { useRef, useState, useEffect, createContext } from "react";
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
 import { ChevronRightIcon, CircleIcon } from "lucide-react";
 import { motion, AnimatePresence, useMotionValue } from "motion/react";
@@ -21,16 +15,6 @@ type ContextMenuTriggerProps = React.ComponentProps<
 const ContextMenuSubContentContext = createContext<{ isOpen: boolean } | null>(
   null
 );
-
-function useContextMenuSubContent() {
-  const context = useContext(ContextMenuSubContentContext);
-  if (!context) {
-    throw new Error(
-      "ContextMenuSubContent components must be used within a ContextMenuSubContent"
-    );
-  }
-  return context;
-}
 
 function ContextMenu({
   ...props
