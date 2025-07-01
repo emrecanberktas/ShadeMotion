@@ -112,20 +112,30 @@ function AlertDialogContent({
             <motion.div
               initial={{
                 opacity: 0,
-                filter: "blur(4px)",
-                transform: "perspective(500px) rotateX(20deg) scale(0.8)",
+                scale: 0.2,
+                rotate: 15,
+                filter: "blur(12px)",
+                transformOrigin: "50% 50%",
               }}
               animate={{
                 opacity: 1,
+                scale: 1,
+                rotate: 0,
                 filter: "blur(0px)",
-                transform: "perspective(500px) rotateX(0deg) scale(1)",
+                transformOrigin: "50% 50%",
               }}
               exit={{
                 opacity: 0,
-                filter: "blur(4px)",
-                transform: "perspective(500px) rotateX(20deg) scale(0.8)",
+                scale: 0.1,
+                rotate: -25,
+                filter: "blur(20px)",
+                transformOrigin: "50% 50%",
               }}
-              transition={{ type: "spring", stiffness: 150, damping: 25 }}
+              transition={{
+                type: "spring",
+                stiffness: 140,
+                damping: 18,
+              }}
               className={cn(
                 "fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background p-6 shadow-lg sm:max-w-lg",
                 className
