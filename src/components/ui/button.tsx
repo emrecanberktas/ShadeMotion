@@ -77,9 +77,9 @@ interface LoadingButtonProps {
 function LoadingButton({
   state = "idle",
   onClick,
-  idleText = "Send me a login link",
+  idleText = "Form Submit",
   loadingIndicator = <Loader2Icon className="animate-spin" />,
-  successText = "Login link sent!",
+  successText = "Form Submitted!",
   className,
   disabled,
 }: LoadingButtonProps) {
