@@ -1,8 +1,7 @@
 import { CheckCircle2Icon, ChevronsUpDown } from "lucide-react";
 import { AvatarGroup } from "./components/ui/avatar-group";
-import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import { Button, LoadingButton } from "./components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
 import {
   Accordion,
@@ -80,6 +79,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
 } from "./components/ui/context-menu";
+import { ScrollArea, ScrollAreaItem } from "./components/ui/scroll-area";
 
 function App() {
   const [buttonState, setButtonState] = useState<
@@ -178,6 +178,10 @@ function App() {
       gradient: "from-indigo-500 to-blue-600",
     },
   ];
+
+  const tags = Array.from({ length: 50 }).map(
+    (_, i, a) => `v1.2.0-beta.${a.length - i}`
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -297,6 +301,29 @@ function App() {
                 </div>
               ))}
             </AnimatedList>
+          </div>
+
+          {/* Scroll Area Section */}
+          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+              Scroll Area Example
+            </h2>
+            <div className="flex justify-center items-center">
+              <ScrollArea className="h-72 w-64 rounded-lg border p-4">
+                <ul className="space-y-4">
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <ScrollAreaItem
+                      key={i}
+                      className="h-10 w-full rounded-md bg-blue-100 flex items-center justify-center"
+                    >
+                      <p className="text-sm text-black dark:text-gray-400 font-medium text-center">
+                        {`Item ${i + 1}`}
+                      </p>
+                    </ScrollAreaItem>
+                  ))}
+                </ul>
+              </ScrollArea>
+            </div>
           </div>
 
           {/* ContextMenu Section */}
@@ -636,36 +663,6 @@ function App() {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-            </div>
-          </div>
-
-          {/* Avatar Section */}
-          <div className="mt-6 sm:mt-8 bg-white dark:bg-zinc-900 p-4 sm:p-6 rounded-lg shadow-sm">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-              Avatar Example
-            </h2>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Avatar className="size-20 sm:size-32">
-                <AvatarImage
-                  src="https://github.com/emrecanberktas.png"
-                  alt="User 1"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar className="size-20 sm:size-32">
-                <AvatarImage
-                  src="https://github.com/emrecanberktas.png"
-                  alt="User 2"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Avatar className="size-20 sm:size-32">
-                <AvatarImage
-                  src="https://github.com/emrecanberktas.png"
-                  alt="User 3"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
             </div>
           </div>
 
