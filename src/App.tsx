@@ -1,7 +1,7 @@
 import { CheckCircle2Icon, ChevronsUpDown } from "lucide-react";
 import { AvatarGroup } from "./components/ui/avatar-group";
 import { Button, LoadingButton } from "./components/ui/button";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
 import {
   Accordion,
@@ -178,10 +178,6 @@ function App() {
       gradient: "from-indigo-500 to-blue-600",
     },
   ];
-
-  const tags = Array.from({ length: 50 }).map(
-    (_, i, a) => `v1.2.0-beta.${a.length - i}`
-  );
 
   useEffect(() => {
     const interval = setInterval(() => {

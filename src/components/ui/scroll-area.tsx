@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
-import { motion, useAnimation, isMotionValue } from "motion/react";
+import { motion, useAnimation } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface ScrollAreaProps
@@ -82,7 +82,6 @@ interface ScrollAreaItemProps
   children?: React.ReactNode;
 }
 
-// Utility to filter out MotionValues from children
 function isProbablyMotionValue(val: any): boolean {
   return val && typeof val === "object" && typeof val.get === "function";
 }
